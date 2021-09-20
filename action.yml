@@ -1,0 +1,32 @@
+name: Automatic Versioning
+author: discoverygarden
+description: Updates the current version tag based on a provided label.
+
+inputs:
+  github_token:
+    description: 'Token to use to push to the repo. Pass in using `secrets.GITHUB_TOKEN`.'
+    required: true
+  labels:
+    description: The labels attached to a pull request.
+    required: true
+  prefix:
+    description: The prefix prepended to the version number. Default is v.
+    required: false
+    default: v
+
+runs:
+  using: "composite"
+  if: github.event.pull_request.merged == true
+  steps:
+    - env:
+        ACTION_TOKEN: ${{ inputs.path }}
+        ACTION_LABELS: ${{ inputs.labels }}
+        ACTION_PREFIX: ${{ inputs.prefix }}
+      id: bump
+      uses: zwaldowski/match-label-action@v2
+      with:
+        allowed: major,minor,patch
+    - uses: zwaldowski/semver-release-action@v2
+      bump: ${{ steps.bump.outputs.match }}
+      github_token: $ACTION_TOKEN
+      prefix: $ACTION_PREFIX
