@@ -1,1 +1,1 @@
-# auto_semver
+# auto-semver
