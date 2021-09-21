@@ -15,15 +15,10 @@ runs:
   using: "composite"
   steps:
     - id: bump
-      #if: github.event.pull_request.merged == true
-      uses: zwaldowski/match-label-action@v2
+      uses: zwaldowski/match-label-action@9e74bc4791a2b1b712d82fea03db1c5dd18ae514
       with:
         allowed: major,minor,patch
-    - name: 'Output Bump'
-      run: ${{ steps.bump.outputs.match }}
-      shell: bash
-    - uses: zwaldowski/semver-release-action@v2
-      #if: github.event.pull_request.merged == true
+    - uses: zwaldowski/semver-release-action@239e9cd0db94c047ca49b554fd217386f0f86ad4
       with:
         bump: ${{ steps.bump.outputs.match }}
         github_token: ${{ inputs.token }}
