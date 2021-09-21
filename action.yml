@@ -28,6 +28,3 @@ runs:
         bump: ${{ steps.bump.outputs.match }}
         github_token: ${{ inputs.token }}
         prefix: ${{ inputs.prefix }}
-#env:
-        #ACTION_TOKEN: ${{ inputs.token }}
-        #ACTION_PREFIX: ${{ inputs.prefix }}
