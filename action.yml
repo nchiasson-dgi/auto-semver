@@ -18,12 +18,12 @@ runs:
         ACTION_TOKEN: ${{ inputs.token }}
         ACTION_PREFIX: ${{ inputs.prefix }}
       id: bump
-      if: github.event.pull_request.merged == true
+      #if: github.event.pull_request.merged == true
       uses: zwaldowski/match-label-action@v2
       with:
         allowed: major,minor,patch
     - uses: zwaldowski/semver-release-action@v2
-      if: github.event.pull_request.merged == true
+      #if: github.event.pull_request.merged == true
       with:
         bump: ${{ steps.bump.outputs.match }}
         github_token: $ACTION_TOKEN
