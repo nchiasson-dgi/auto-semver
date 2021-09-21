@@ -4,7 +4,7 @@ A GitHub action for automatically semantic versioning a repository when a closin
 
 
 ## Inputs
-- **token:** 'Token to use to push to the repo. Pass in using `secrets.GITHUB_TOKEN`.' (required)
+- **token:** Token to use to push to the repo. Pass in using `secrets.GITHUB_TOKEN`. (required)
 - **prefix:** The prefix prepended to the version number. Default is v.
 
 ## Outputs
