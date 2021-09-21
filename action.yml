@@ -22,6 +22,8 @@ runs:
       uses: zwaldowski/match-label-action@v2
       with:
         allowed: major,minor,patch
+    - name: 'Output Bump'
+      run: echo "${{ steps.bump.outputs.match }}"
     - uses: zwaldowski/semver-release-action@v2
       #if: github.event.pull_request.merged == true
       with:
