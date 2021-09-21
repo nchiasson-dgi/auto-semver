@@ -22,12 +22,12 @@ runs:
     - name: 'Output Bump'
       run: ${{ steps.bump.outputs.match }}
       shell: bash
-    - env:
-        ACTION_TOKEN: ${{ inputs.token }}
-        ACTION_PREFIX: ${{ inputs.prefix }}
-      uses: zwaldowski/semver-release-action@v2
+    - uses: zwaldowski/semver-release-action@v2
       #if: github.event.pull_request.merged == true
       with:
         bump: ${{ steps.bump.outputs.match }}
-        github_token: $ACTION_TOKEN
-        prefix: $ACTION_PREFIX
+        github_token: ${{ inputs.token }}
+        prefix: ${{ inputs.prefix }}
+#env:
+        #ACTION_TOKEN: ${{ inputs.token }}
+        #ACTION_PREFIX: ${{ inputs.prefix }}
