@@ -14,10 +14,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - env:
-        ACTION_TOKEN: ${{ inputs.token }}
-        ACTION_PREFIX: ${{ inputs.prefix }}
-      id: bump
+    - id: bump
       #if: github.event.pull_request.merged == true
       uses: zwaldowski/match-label-action@v2
       with:
@@ -25,7 +22,10 @@ runs:
     - name: 'Output Bump'
       run: ${{ steps.bump.outputs.match }}
       shell: bash
-    - uses: zwaldowski/semver-release-action@v2
+    - env:
+        ACTION_TOKEN: ${{ inputs.token }}
+        ACTION_PREFIX: ${{ inputs.prefix }}
+      uses: zwaldowski/semver-release-action@v2
       #if: github.event.pull_request.merged == true
       with:
         bump: ${{ steps.bump.outputs.match }}
