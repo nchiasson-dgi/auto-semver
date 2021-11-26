@@ -1,0 +1,37 @@
+name: Update Major Tag
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      TAG_NAME:
+        description: 'Tag name that the major tag will point to'
+        required: true
+
+env:
+  TAG_NAME: ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  update_tag:
+    name: Update the major tag to include the ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }} changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Checkout Update Major Tag
+      uses: actions/checkout@v2
+      with:
+        repository: actions/publish-action
+        ref: 9b5fe1fd8f3e31b3947555d1e4c61f96085b648d
+        token: ${{ secrets.GITHUB_TOKEN }}
+        path: .github/actions/publish-action
+    - name: Update the ${{ env.TAG_NAME }} tag
+      id: update-major-tag
+      uses: ./.github/actions/publish-action
+      with:
+        source-tag: ${{ env.TAG_NAME }}
